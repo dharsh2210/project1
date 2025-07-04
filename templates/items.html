@@ -1,33 +1,52 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Items</title>
+  <title>All Items</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100 p-6">
-  <h1 class="text-3xl font-bold mb-4">Lost Items</h1>
-  <div>
+<body class="bg-blue-50 min-h-screen p-8">
+
+  <div class="flex justify-between mb-6">
+    <a href="{{ url_for('report') }}" class="text-blue-600 font-bold">Report New Item</a>
+    <a href="{{ url_for('logout') }}" class="text-red-600 font-bold">Logout</a>
+  </div>
+
+  <h2 class="text-2xl font-bold mb-4">Lost Items</h2>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
     {% for item in lost_items %}
-      <div class="bg-white p-4 rounded shadow mb-4">
-        <p><strong>{{ item[1] }}</strong> - {{ item[2] }}</p>
-        <p>Location: {{ item[3] }}</p>
-        <p>Date: {{ item[4] }}</p>
-        <p>Contact: {{ item[5] }}</p>
-      </div>
+    <div class="bg-white p-4 rounded shadow">
+      {% if item[6] %}
+        <img src="{{ url_for('static', filename='uploads/' ~ item[6]) }}" class="w-full h-48 object-cover mb-2 rounded">
+      {% endif %}
+      <h3 class="font-bold text-red-600">{{ item[1] }}</h3>
+      <p>{{ item[2] }}</p>
+      <p><b>Location:</b> {{ item[3] }}</p>
+      <p><b>Contact:</b> {{ item[5] }}</p>
+      <form method="POST" action="{{ url_for('mark_found', item_id=item[0]) }}">
+        <button class="bg-blue-600 text-white mt-2 px-3 py-1 rounded">Mark as Found</button>
+      </form>
+    </div>
     {% endfor %}
   </div>
-  <h1 class="text-3xl font-bold mt-6 mb-4">Found Items</h1>
-  <div>
+
+  <h2 class="text-2xl font-bold my-4">Found Items</h2>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
     {% for item in found_items %}
-      <div class="bg-white p-4 rounded shadow mb-4">
-        <p><strong>{{ item[1] }}</strong> - {{ item[2] }}</p>
-        <p>Location: {{ item[3] }}</p>
-        <p>Date: {{ item[4] }}</p>
-        <p>Contact: {{ item[5] }}</p>
-      </div>
+    <div class="bg-white p-4 rounded shadow">
+      {% if item[6] %}
+        <img src="{{ url_for('static', filename='uploads/' ~ item[6]) }}" class="w-full h-48 object-cover mb-2 rounded">
+      {% endif %}
+      <h3 class="font-bold text-green-600">{{ item[1] }}</h3>
+      <p>{{ item[2] }}</p>
+      <p><b>Location:</b> {{ item[3] }}</p>
+      <p><b>Contact:</b> {{ item[5] }}</p>
+      <form method="POST" action="{{ url_for('claim', item_id=item[0]) }}">
+        <button class="bg-green-600 text-white mt-2 px-3 py-1 rounded">Claim</button>
+      </form>
+    </div>
     {% endfor %}
   </div>
+
 </body>
 </html>
