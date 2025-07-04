@@ -1,0 +1,33 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Items</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-6">
+  <h1 class="text-3xl font-bold mb-4">Lost Items</h1>
+  <div>
+    {% for item in lost_items %}
+      <div class="bg-white p-4 rounded shadow mb-4">
+        <p><strong>{{ item[1] }}</strong> - {{ item[2] }}</p>
+        <p>Location: {{ item[3] }}</p>
+        <p>Date: {{ item[4] }}</p>
+        <p>Contact: {{ item[5] }}</p>
+      </div>
+    {% endfor %}
+  </div>
+  <h1 class="text-3xl font-bold mt-6 mb-4">Found Items</h1>
+  <div>
+    {% for item in found_items %}
+      <div class="bg-white p-4 rounded shadow mb-4">
+        <p><strong>{{ item[1] }}</strong> - {{ item[2] }}</p>
+        <p>Location: {{ item[3] }}</p>
+        <p>Date: {{ item[4] }}</p>
+        <p>Contact: {{ item[5] }}</p>
+      </div>
+    {% endfor %}
+  </div>
+</body>
+</html>
